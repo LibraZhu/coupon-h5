@@ -4,7 +4,7 @@ import { showToast } from "vant";
 
 const service = axios.create({
   baseURL: import.meta.env.PROD
-    ? "https://springboot-q6l6-14929-5-1314654459.sh.run.tcloudbase.com/"
+    ? "https://springboot-q6l6-14929-5-1314654459.sh.run.tcloudbase.com"
     : "http://172.16.4.177",
   timeout: 15000, // request timeout
 } as CreateAxiosDefaults);
