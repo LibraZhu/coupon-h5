@@ -32,8 +32,8 @@
 <script lang="ts" setup>
 import { searchProductByLink } from "@/api";
 import { SourceEnum } from "@/enum";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import { Base64 } from "js-base64";
 import { closeToast, showLoadingToast, showToast } from "vant";
 import { ref } from "vue";
@@ -42,7 +42,7 @@ import { useRouter } from "vue-router";
 defineOptions({
   name: "Search",
 });
-useOpenid();
+useApp();
 const { assets } = useImage();
 const router = useRouter();
 const searchKey = ref("");

@@ -17,13 +17,13 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 
 defineOptions({
   name: "Setting",
 });
-useOpenid();
+useApp();
 const { assets } = useImage();
 </script>
 <style lang="scss" scoped></style>

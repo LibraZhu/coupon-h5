@@ -80,7 +80,6 @@ const onProductClick = () => {
         id: props.product.goods_id,
         sid: props.product.searchId,
         type: props.product.source,
-        gOpenid: route.query.gOpenid ?? "",
       },
     });
     return;
@@ -94,7 +93,6 @@ const onProductClick = () => {
       query: {
         data: Base64.encode(JSON.stringify(props.product)),
         type: props.product.source,
-        gOpenid: route.query.gOpenid ?? "",
       },
     });
   } else {
@@ -104,7 +102,6 @@ const onProductClick = () => {
         id: props.product.goods_id,
         sid: props.product.searchId,
         type: props.product.source,
-        gOpenid: route.query.gOpenid ?? "",
       },
     });
   }

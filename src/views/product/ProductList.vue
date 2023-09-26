@@ -38,10 +38,7 @@
   </van-tabs>
   <div class="divider"></div>
   <div class="page-container">
-    <VanPullRefresh
-      v-model="refreshing"
-      @refresh="onRefresh"
-    >
+    <VanPullRefresh v-model="refreshing" @refresh="onRefresh">
       <VanList
         v-model:loading="loadMore"
         :finished="finished"
@@ -68,14 +65,14 @@
 import { listProduct } from "@/api";
 import { Product, ProductQueryParam } from "@/api/model";
 import { SourceEnum } from "@/enum";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import router from "@/router";
 import ProductItem from "@/views/product/ProductItem.vue";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
-useOpenid();
+useApp();
 const route = useRoute();
 const { assets } = useImage();
 const icons: Record<number, string> = {

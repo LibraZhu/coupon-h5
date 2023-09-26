@@ -163,12 +163,12 @@
 </template>
 <script lang="ts" setup>
 import { walletNumber } from "@/api";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import router from "@/router";
 import { onActivated, ref } from "vue";
 defineOptions({ name: "Mine" });
-useOpenid();
+useApp();
 const refreshing = ref(false);
 const money = ref("0.00");
 const settleOrderNum = ref("0");

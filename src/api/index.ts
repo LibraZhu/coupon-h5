@@ -1,4 +1,5 @@
 import request from "@/api/request";
+import { showToast } from "vant";
 import { useAppStore } from "../store/modules/app";
 import {
   CollectListParam,
@@ -10,96 +11,79 @@ import {
   WalletModifyParam,
 } from "./model";
 
-export async function post(url: string, data: any) {
+export async function api(url: string, params: any, method: "POST" | "GET") {
   const appStore = useAppStore();
-  if (appStore.uid) {
-    return request.post(url, data);
-  } else {
-    const res = await request.post("/user/loginG", {
-      gOpenid: appStore.gOpenid,
-    });
-    if (res && res.code === 200) {
-      appStore.setUid(res.data.id);
-      return request.post(url, data);
-    }
-    return res;
+  if (!appStore.uid) {
+    showToast("用户不存在");
+    return;
   }
-}
-
-export async function get(url: string, params: any) {
-  const appStore = useAppStore();
-  if (appStore.uid) {
-    return request.get(url, { params });
-  } else {
-    const res = await request.post("/user/loginG", {
-      gOpenid: appStore.gOpenid,
-    });
-    if (res && res.code === 200) {
-      appStore.setUid(res.data.id);
-      return request.get(url, { params });
-    }
-    return res;
-  }
+  return import.meta.env.PROD
+    ? appStore.callCloud(url, method, params)
+    : method === "GET"
+    ? request.get(url, { params })
+    : request.post(url, params);
 }
 
 //商品搜索
 export const searchProductByLink = (keyword: string) =>
-  post("/product/searchLink", { keyword });
+  api("/product/searchLink", { keyword }, "POST");
 //商品列表
 export const listProduct = (data: ProductQueryParam) =>
-  post("/product/list", data);
+  api("/product/list", data, "POST");
 //商品实时热销列表
 export const hotProduct = (data: ProductQueryParam) =>
-  post("/product/hotList", data);
+  api("/product/hotList", data, "POST");
 //商品搜索
 export const searchProduct = (data: ProductQueryParam) =>
-  post("/product/search", data);
+  api("/product/search", data, "POST");
 //商品超链
 export const getLink = (data: ProductDetailParam) =>
-  post("/product/link", data);
+  api("/product/link", data, "POST");
 //商品详情
 export const productDetail = (data: ProductDetailParam) =>
-  post("/product/detail", data);
+  api("/product/detail", data, "POST");
 //pdd商品搜索
 export const searchProductPdd = (data: ProductQueryParam) =>
-  post("/product/search/pdd", data);
+  api("/product/search/pdd", data, "POST");
 //商品是否收藏
 export const collectCheck = (productId: string) =>
-  post("/collect/check", { productId });
+  api("/collect/check", { productId }, "POST");
 //收藏商品列表
 export const listCollectProduct = (data: CollectListParam) =>
-  post("/collect/list", data);
+  api("/collect/list", data, "POST");
 //商品收藏操作
 export const collectHandle = (
   productId: string,
   collect: boolean,
   product: string
-) => post("/collect/handle", { productId, collect, product });
+) => api("/collect/handle", { productId, collect, product }, "POST");
 //订单列表
-export const orderList = (data: OrderListParam) => post("/order/list", data);
+export const orderList = (data: OrderListParam) =>
+  api("/order/list", data, "POST");
 //钱包信息
-export const walletInfo = () => post("/wallet/info", {});
+export const walletInfo = () => api("/wallet/info", {}, "POST");
 export const walletModify = (data: WalletModifyParam) =>
-  post("/wallet/info/modify", data);
+  api("/wallet/info/modify", data, "POST");
 //钱包余额信息
-export const walletNumber = () => post("/wallet/number", {});
+export const walletNumber = () => api("/wallet/number", {}, "POST");
 //提现
 export const walletRecordCash = (data: WalletCashParam) =>
-  post("/wallet/record/cash", data);
+  api("/wallet/record/cash", data, "POST");
 //提现记录
 export const walletCashList = (page: PageParams) =>
-  post("/wallet/record/cashList", page);
+  api("/wallet/record/cashList", page, "POST");
 //结算记录
 export const walletSettleList = (page: PageParams) =>
-  post("/wallet/record/settleList", page);
+  api("/wallet/record/settleList", page, "POST");
 //钱包明细
 export const walletLogList = (page: PageParams) =>
-  post("/wallet/log/list", page);
+  api("/wallet/log/list", page, "POST");
 //外卖-美团
 export const meituan = (type?: number) =>
-  get("/jtk/meituan", { type: type ?? 1 });
+  api("/jtk/meituan", { type: type ?? 1 }, "GET");
 //外卖-饿了么
-export const ele = (type?: number) => get("/jtk/ele", { type: type ?? 4 });
+export const ele = (type?: number) =>
+  api("/jtk/ele", { type: type ?? 4 }, "GET");
 //统一活动转链接口
 export const unionLink = (type?: number) =>
-  get("/jtk/unionLink", { type: type });
+  api("/jtk/unionLink", { type: type }, "GET");

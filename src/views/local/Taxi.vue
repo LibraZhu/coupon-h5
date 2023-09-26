@@ -70,13 +70,12 @@
 </template>
 <script lang="ts" setup>
 import { unionLink } from "@/api";
-import EventBus from "@/bus";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import { closeToast, showLoadingToast } from "vant";
 import { onMounted, ref } from "vue";
 
-useOpenid();
+useApp();
 const { assets } = useImage();
 const tabIndex = ref(0);
 const navbarBackground = ref("#ec5b26");

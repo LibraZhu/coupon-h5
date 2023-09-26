@@ -31,10 +31,10 @@ defineOptions({
 });
 import { listCollectProduct } from "@/api";
 import { PageParams, Product } from "@/api/model";
-import { useOpenid } from "@/hooks/useOpenid";
+import { useApp } from "@/hooks/useApp";
 import ProductItem from "@/views/product/ProductItem.vue";
 import { onMounted, ref } from "vue";
-useOpenid();
+useApp();
 const listParam: PageParams = {
   page: 1,
   pageSize: 20,

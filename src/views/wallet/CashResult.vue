@@ -18,9 +18,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useOpenid } from "@/hooks/useOpenid";
+import { useApp } from "@/hooks/useApp";
 import { useRoute, useRouter } from "vue-router";
-useOpenid();
+useApp();
 const route = useRoute();
 const router = useRouter();
 const sn = route.query.sn ?? "";

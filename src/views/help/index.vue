@@ -28,13 +28,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useOpenid } from "@/hooks/useOpenid";
+import { useApp } from "@/hooks/useApp";
 import { ref } from "vue";
 
 defineOptions({
   name: "Help",
 });
-useOpenid();
+useApp();
 const activeNames = ref(["1", "2"]);
 </script>
 <style lang="scss" scoped></style>

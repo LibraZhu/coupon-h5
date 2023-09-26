@@ -45,8 +45,8 @@
 <script lang="ts" setup>
 import { hotProduct } from "@/api";
 import { Product, ProductQueryParam } from "@/api/model";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import ProductItem from "@/views/product/ProductItem.vue";
 import { onMounted, ref } from "vue";
 
@@ -55,7 +55,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-useOpenid();
+useApp();
 const { assets } = useImage();
 const tabs = [
   { id: 2, name: "京东", icon: assets("jd_w.png"), icon_c: assets("jd_c.png") },

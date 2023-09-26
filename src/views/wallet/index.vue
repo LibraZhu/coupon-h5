@@ -105,7 +105,7 @@ import {
   walletModify,
   walletRecordCash,
 } from "@/api";
-import { useOpenid } from "@/hooks/useOpenid";
+import { useApp } from "@/hooks/useApp";
 import { showDialog, showLoadingToast, showToast } from "vant";
 import { nextTick, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -119,7 +119,7 @@ import {
 defineOptions({
   name: "Wallet",
 });
-useOpenid();
+useApp();
 const router = useRouter();
 const route = useRoute();
 const tabIndex = ref(0);

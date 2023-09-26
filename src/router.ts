@@ -230,13 +230,6 @@ router.beforeEach((to, from, next) => {
         ? `${to.fullPath}?uid=${from.query.uid}`
         : `${to.fullPath}&uid=${from.query.uid}`;
   }
-  if (from.query.gOpenid) {
-    to.query.gOpenid = from.query.gOpenid;
-    to.fullPath =
-      to.fullPath.indexOf("?") == -1
-        ? `${to.fullPath}?gOpenid=${from.query.gOpenid}`
-        : `${to.fullPath}&gOpenid=${from.query.gOpenid}`;
-  }
   next();
 });
 

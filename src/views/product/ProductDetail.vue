@@ -113,14 +113,14 @@
 import { collectCheck, collectHandle, getLink, productDetail } from "@/api";
 import { Product, ProductDetailParam } from "@/api/model";
 import { SourceEnum } from "@/enum";
-import { useOpenid } from "@/hooks/useOpenid";
+import { useApp } from "@/hooks/useApp";
 import { Base64 } from "js-base64";
 import { closeToast, showLoadingToast, showToast } from "vant";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
-useOpenid();
+useApp();
 const tabRef = ref();
 const imageWidth = ref(document.body.clientWidth);
 let scrollTop = 0;

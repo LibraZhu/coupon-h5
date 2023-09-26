@@ -54,11 +54,11 @@
 <script lang="ts" setup>
 import { walletCashList } from "@/api";
 import { PageParams, WalletRecord } from "@/api/model";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-useOpenid();
+useApp();
 const route = useRoute();
 const router = useRouter();
 const { assets } = useImage();

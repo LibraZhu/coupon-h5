@@ -82,12 +82,12 @@
 <script lang="ts" setup>
 import { ele } from "@/api";
 import { SysConfig } from "@/api/model";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import { closeToast, showLoadingToast } from "vant";
 import { onMounted, reactive } from "vue";
 
-useOpenid();
+useApp();
 const { assets } = useImage();
 const dialogInfo = reactive({
   visible: false,

@@ -84,14 +84,14 @@
 <script lang="ts" setup>
 import { orderList } from "@/api";
 import { Order, OrderListParam } from "@/api/model";
+import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { useOpenid } from "@/hooks/useOpenid";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 defineOptions({
   name: "Order",
 });
-useOpenid();
+useApp();
 const route = useRoute();
 const router = useRouter();
 const { assets } = useImage();
