@@ -7,19 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    copy: typeof import('./src/components/tabbar copy.vue')['default']
-    Layout: typeof import('./src/components/layout.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Tabbar: typeof import('./src/components/tabbar.vue')['default']
     VanButton: typeof import('vant/es')['Button']
-    VanCard: typeof import('vant/es')['Card']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanCollapse: typeof import('vant/es')['Collapse']
     VanCollapseItem: typeof import('vant/es')['CollapseItem']
     VanDialog: typeof import('vant/es')['Dialog']
-    VanDivider: typeof import('vant/es')['Divider']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
     VanGrid: typeof import('vant/es')['Grid']
@@ -27,12 +22,8 @@ declare module 'vue' {
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanList: typeof import('vant/es')['List']
-    VanLoading: typeof import('vant/es')['Loading']
     VanNavBar: typeof import('vant/es')['NavBar']
-    VanOverlay: typeof import('vant/es')['Overlay']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
-    VanRadio: typeof import('vant/es')['Radio']
-    VanRadioGroup: typeof import('vant/es')['RadioGroup']
     VanSearch: typeof import('vant/es')['Search']
     VanSpace: typeof import('vant/es')['Space']
     VanSwipe: typeof import('vant/es')['Swipe']
@@ -40,7 +31,6 @@ declare module 'vue' {
     VanTab: typeof import('vant/es')['Tab']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
-    Vantabs: typeof import('vant/es')['tabs']
     VanTabs: typeof import('vant/es')['Tabs']
   }
 }

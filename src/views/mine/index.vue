@@ -1,158 +1,135 @@
 <template>
-  <div class="flex-column full-height">
-    <div class="mine-navbar-container">
-      <div class="mine-navbar">个人中心</div>
+  <div class="mine-navbar-container">
+    <div class="mine-navbar">个人中心</div>
+  </div>
+
+  <VanPullRefresh
+    ref="pullRefreshRef"
+    class="page-container"
+    v-model="refreshing"
+    @refresh="onRefresh"
+  >
+    <div class="mine-scroll-top-space">
+      <img
+        style="width: 50px; height: 50px; z-index: 1; border-radius: 100px"
+        :src="assets('avatar.png')"
+      />
+      <div
+        class="flex-column"
+        style="z-index: 1; margin-left: 6px; color: white"
+      >
+        <span style="font-size: 14px; margin-top: 6px">微信用户</span>
+        <span style="font-size: 12px; margin-top: 1px">公众号: A多多省</span>
+      </div>
     </div>
-
-    <VanPullRefresh
-      ref="pullRefreshRef"
-      class="page-container"
-      v-model="refreshing"
-      @refresh="onRefresh"
-    >
-      <div class="mine-scroll-top-space">
-        <VanImage
-          width="50"
-          height="50"
-          style="z-index: 1"
+    <div class="mine-cash-out-container">
+      <div class="flex">
+        <div class="flex-column flexable">
+          <span class="mine-cash-out-title">账户余额(元)</span>
+          <span class="mine-cash-out-content">{{ money }}</span>
+        </div>
+        <VanButton
+          size="mini"
           round
-          :src="assets('avatar.png')"
-        />
-        <div
-          class="flex-column"
-          style="z-index: 1; margin-left: 6px; color: white"
-        >
-          <span style="font-size: 14px; margin-top: 6px">微信用户</span>
-          <span style="font-size: 12px; margin-top: 1px">公众号: A多多省</span>
-        </div>
-      </div>
-      <div class="mine-cash-out-container">
-        <div class="flex">
-          <div class="flex-column flexable">
-            <span class="mine-cash-out-title">账户余额(元)</span>
-            <span class="mine-cash-out-content">{{ money }}</span>
-          </div>
-          <VanButton
-            size="mini"
-            round
-            color="linear-gradient(to right, #ef3752, #fe5f31)"
-            style="padding: 0px 12px"
-            @click="onWalletClick"
-          >
-            去提现
-          </VanButton>
-        </div>
-        <div class="flex" style="margin-top: 20px">
-          <div class="flex-column flexable">
-            <span class="mine-cash-out-title">待结算订单(单)</span>
-            <span class="mine-cash-out-content">{{ settleOrderNum }}</span>
-          </div>
-          <div class="flex-column flexable">
-            <span class="mine-cash-out-title">待结算佣金(元)</span>
-            <span class="mine-cash-out-content">{{ unSettleMoney }}</span>
-          </div>
-          <div class="flex-column flexable">
-            <span class="mine-cash-out-title">累计提现(元)</span>
-            <span class="mine-cash-out-content">{{ cashOutMoney }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mine-menu flex">
-        <div
-          class="mine-menu-item"
-          style="width: auto; flex: 1"
+          color="linear-gradient(to right, #ef3752, #fe5f31)"
+          style="padding: 0px 12px"
           @click="onWalletClick"
         >
-          <VanImage
-            class="mine-menu-image"
-            :src="assets('cash_out.png')"
-          ></VanImage>
-          <div class="mine-menu-name">钱包提现</div>
+          去提现
+        </VanButton>
+      </div>
+      <div class="flex" style="margin-top: 20px">
+        <div class="flex-column flexable">
+          <span class="mine-cash-out-title">待结算订单(单)</span>
+          <span class="mine-cash-out-content">{{ settleOrderNum }}</span>
         </div>
-        <div style="width: 1px; height: 50px; background-color: #f5f5f5"></div>
-        <div
-          class="mine-menu-item"
-          style="width: auto; flex: 1"
-          @click="onCashRecordClick"
-        >
-          <VanImage
-            class="mine-menu-image"
-            :src="assets('cash_out_record.png')"
-          ></VanImage>
-          <div class="mine-menu-name">提现记录</div>
+        <div class="flex-column flexable">
+          <span class="mine-cash-out-title">待结算佣金(元)</span>
+          <span class="mine-cash-out-content">{{ unSettleMoney }}</span>
+        </div>
+        <div class="flex-column flexable">
+          <span class="mine-cash-out-title">累计提现(元)</span>
+          <span class="mine-cash-out-content">{{ cashOutMoney }}</span>
         </div>
       </div>
-      <div class="mine-order">
-        <div class="flex p-10" @click="onOrderClick(0)">
-          <span class="flexable">我的订单</span>
-          <span>全部</span>
-          <van-icon name="arrow"></van-icon>
-        </div>
+    </div>
 
-        <div class="mine-order-menu">
-          <div class="mine-menu-item" @click="onOrderClick(1)">
-            <VanImage
-              class="mine-order-menu-image"
-              :src="assets('order_deliver.png')"
-            ></VanImage>
-            <div class="mine-order-menu-name">待收货</div>
-          </div>
-          <div class="mine-menu-item" @click="onOrderClick(2)">
-            <VanImage
-              class="mine-order-menu-image"
-              :src="assets('order_complete.png')"
-            ></VanImage>
-            <div class="mine-order-menu-name">待结算</div>
-          </div>
-          <div class="mine-menu-item" @click="onOrderClick(3)">
-            <VanImage
-              class="mine-order-menu-image"
-              :src="assets('order_settled.png')"
-            ></VanImage>
-            <div class="mine-order-menu-name">已结算</div>
-          </div>
-          <div class="mine-menu-item" @click="onOrderClick(4)">
-            <VanImage
-              class="mine-order-menu-image"
-              :src="assets('order_invalid.png')"
-            ></VanImage>
-            <div class="mine-order-menu-name">已失效</div>
-          </div>
+    <div class="mine-menu flex">
+      <div
+        class="mine-menu-item"
+        style="width: auto; flex: 1"
+        @click="onWalletClick"
+      >
+        <img class="mine-menu-image" :src="assets('cash_out.png')" />
+        <div class="mine-menu-name">钱包提现</div>
+      </div>
+      <div style="width: 1px; height: 50px; background-color: #f5f5f5"></div>
+      <div
+        class="mine-menu-item"
+        style="width: auto; flex: 1"
+        @click="onCashRecordClick"
+      >
+        <img class="mine-menu-image" :src="assets('cash_out_record.png')" />
+        <div class="mine-menu-name">提现记录</div>
+      </div>
+    </div>
+    <div class="mine-order">
+      <div class="flex p-10" @click="onOrderClick(0)">
+        <span class="flexable">我的订单</span>
+        <span>全部</span>
+        <van-icon name="arrow"></van-icon>
+      </div>
+
+      <div class="mine-order-menu">
+        <div class="mine-menu-item" @click="onOrderClick(1)">
+          <img
+            class="mine-order-menu-image"
+            :src="assets('order_deliver.png')"
+          />
+          <div class="mine-order-menu-name">待收货</div>
+        </div>
+        <div class="mine-menu-item" @click="onOrderClick(2)">
+          <img
+            class="mine-order-menu-image"
+            :src="assets('order_complete.png')"
+          />
+          <div class="mine-order-menu-name">待结算</div>
+        </div>
+        <div class="mine-menu-item" @click="onOrderClick(3)">
+          <img
+            class="mine-order-menu-image"
+            :src="assets('order_settled.png')"
+          />
+          <div class="mine-order-menu-name">已结算</div>
+        </div>
+        <div class="mine-menu-item" @click="onOrderClick(4)">
+          <img
+            class="mine-order-menu-image"
+            :src="assets('order_invalid.png')"
+          />
+          <div class="mine-order-menu-name">已失效</div>
         </div>
       </div>
-      <div class="mine-menu">
-        <div class="mine-menu-item" @click="onHelpClick">
-          <VanImage
-            class="mine-menu-image"
-            :src="assets('help.png')"
-          ></VanImage>
-          <div class="mine-menu-name">帮助中心</div>
-        </div>
-        <div class="mine-menu-item" @click="onCollectClick">
-          <VanImage
-            class="mine-menu-image"
-            :src="assets('collect.png')"
-          ></VanImage>
-          <div class="mine-menu-name">我的收藏</div>
-        </div>
-        <div class="mine-menu-item" @click="onCustomerServiceClick">
-          <VanImage
-            class="mine-menu-image"
-            :src="assets('weixin.png')"
-          ></VanImage>
-          <div class="mine-menu-name">召唤客户</div>
-        </div>
-        <div class="mine-menu-item" @click="onUserClick">
-          <VanImage
-            class="mine-menu-image"
-            :src="assets('setting.png')"
-          ></VanImage>
-          <div class="mine-menu-name">个人设置</div>
-        </div>
+    </div>
+    <div class="mine-menu">
+      <div class="mine-menu-item" @click="onHelpClick">
+        <img class="mine-menu-image" :src="assets('help.png')" />
+        <div class="mine-menu-name">帮助中心</div>
       </div>
-    </VanPullRefresh>
-  </div>
+      <div class="mine-menu-item" @click="onCollectClick">
+        <img class="mine-menu-image" :src="assets('collect.png')" />
+        <div class="mine-menu-name">我的收藏</div>
+      </div>
+      <div class="mine-menu-item" @click="onCustomerServiceClick">
+        <img class="mine-menu-image" :src="assets('weixin.png')" />
+        <div class="mine-menu-name">召唤客户</div>
+      </div>
+      <div class="mine-menu-item" @click="onUserClick">
+        <img class="mine-menu-image" :src="assets('setting.png')" />
+        <div class="mine-menu-name">个人设置</div>
+      </div>
+    </div>
+  </VanPullRefresh>
   <van-dialog
     v-model:show="dialogVisible"
     width="240"

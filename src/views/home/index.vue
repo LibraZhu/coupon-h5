@@ -29,7 +29,7 @@
           style="border-radius: 10px"
           @click="onBannerClick(banner)"
         >
-          <VanImage :radius="10" fit="contain" :src="banner.image" />
+          <img style="width: 100%; border-radius: 10px" :src="banner.image" />
         </VanSwipeItem>
       </VanSwipe>
       <VanGrid :column-num="5" :border="false">
@@ -40,7 +40,7 @@
           @click="onMenuClick(menu)"
         >
           <template #icon>
-            <VanImage width="36" height="36" :src="menu.image" />
+            <img style="width: 36px; height: 36px" :src="menu.image" />
           </template>
         </VanGridItem>
       </VanGrid>

@@ -1,16 +1,13 @@
 <template>
   <div class="product-item" @click="onProductClick">
-    <VanImage
-      width="150"
-      height="150"
-      radius="8"
-      lazy-load
+    <img
+      style="width: 150px; height: 150px; border-radius: 8px"
       :src="product.picurl"
     />
     <div class="product-content">
       <div class="product-title van-multi-ellipsis--l2">
-        <VanImage v-if="product.is_tmall" height="14" :src="icons[33]" />
-        <VanImage v-else width="16" :src="icons[product.source]" />
+        <img v-if="product.is_tmall" style="height: 14px" :src="icons[33]" />
+        <img v-else style="width: 16px" :src="icons[product.source]" />
         {{ product.goods_name }}
       </div>
       <div>

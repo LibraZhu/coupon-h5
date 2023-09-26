@@ -36,7 +36,7 @@
               <text>支付时间：</text>
               <text class="cash-record-value">{{ item.payTime }}</text>
             </div>
-            <VanImage
+            <img
               class="cash-record-status"
               :src="statusImages[item.payStatus ?? 0]?.toString()"
             />

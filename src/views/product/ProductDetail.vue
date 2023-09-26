@@ -24,7 +24,7 @@
     </VanNavBar>
     <VanSwipe :width="imageWidth" :height="imageWidth">
       <VanSwipeItem v-for="pic in picList">
-        <VanImage :src="pic" />
+        <img style="width: 100%" :src="pic" />
       </VanSwipeItem>
     </VanSwipe>
     <div class="flex p-10 bg-white">
@@ -68,7 +68,7 @@
         <div class="product-pic-line"></div>
         <span>宝贝详情</span>
       </div>
-      <VanImage v-for="pic in picList" :src="pic" />
+      <img style="width: 100%" v-for="pic in picList" :src="pic" />
     </div>
     <div
       style="min-height: 74px; background-color: #f5f5f5"

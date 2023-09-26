@@ -3,29 +3,29 @@
     class="page-container flex-column pb-10"
     style="background-color: #ffe262"
   >
-    <VanImage
+    <img
       class="mt-image"
       src="http://p1.meituan.net/marketingcpsmedia/83fe198782835ab456534e1b5cbaabf6178757.jpg"
-    ></VanImage>
+    />
     <div class="mt-content">
       <div class="mt-step flex">
         <div class="flexable flex-column flex-center">
           <div class="mt-step-item">
-            <VanImage width="30" :src="assets('wm_1.png')"></VanImage>
+            <img style="width: 30px" :src="assets('wm_1.png')" />
           </div>
           <text class="pt-10">领红包</text>
         </div>
         <text class="mt-step-arrow"></text>
         <div class="flexable flex-center flex-column">
           <div class="mt-step-item">
-            <VanImage width="30" :src="assets('wm_2.png')"></VanImage>
+            <img style="width: 30px" width="30" :src="assets('wm_2.png')" />
           </div>
           <text class="pt-10">再下单</text>
         </div>
         <text class="mt-step-arrow"></text>
         <div class="flexable flex-column flex-center">
           <div class="mt-step-item">
-            <VanImage width="30" :src="assets('wm_3.png')"></VanImage>
+            <img style="width: 30px" width="30" :src="assets('wm_3.png')" />
           </div>
           <text class="pt-10">享优惠</text>
         </div>

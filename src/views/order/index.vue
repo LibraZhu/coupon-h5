@@ -34,14 +34,13 @@
             style="margin-top: 7px; margin-bottom: 7px"
           ></div>
           <div class="flex">
-            <VanImage width="80" height="80" :src="item.imageUrl"></VanImage>
+            <img style="width: 80px; height: 80px" :src="item.imageUrl" />
             <div class="order-product-content">
               <div class="order-product-title van-multi-ellipsis--l2">
-                <VanImage
-                  width="16"
-                  height="16"
+                <img
+                  style="width: 16px; height: 16px"
                   :src="icons[item.orderSource ?? 0].toString()"
-                ></VanImage>
+                />
                 {{ item.skuName }}
               </div>
               <div class="flex order-product-price">
