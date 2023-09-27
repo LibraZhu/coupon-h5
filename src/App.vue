@@ -76,9 +76,13 @@ watch(route, r => {
   }
   if (r.name === "Home") {
     tabIndex.value = "home";
+    cacheViews.value = cacheViews.value.filter(item => item === "Home");
   }
   if (r.name === "Mine") {
     tabIndex.value = "mine";
+    cacheViews.value = cacheViews.value.filter(
+      item => item === "Home" || item === "Mine"
+    );
   }
   if (r.name === "Search") {
     tabIndex.value = "search";

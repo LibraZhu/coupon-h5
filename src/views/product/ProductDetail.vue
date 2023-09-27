@@ -224,7 +224,7 @@ const onCouponClick = () => {
 };
 const onHomeClick = () => {
   router.push({
-    name: "home",
+    name: "Home",
   });
 };
 const onFavClick = () => {
@@ -265,9 +265,9 @@ const onOrderClick = () => {
     } else if (type == SourceEnum.PDD) {
       window.location.href = res.data.mobileShortUrl;
     } else if (type == SourceEnum.TB) {
-      copy(res.data, "复制成功,打开淘宝app下单");
+      copy(res.data.tkl, "复制成功,打开淘宝app下单");
     } else if (type == SourceEnum.DY) {
-      copy(res.data, "复制成功,打开抖音app下单");
+      copy(res.data.tkl, "复制成功,打开抖音app下单");
     } else if (type == SourceEnum.WPH) {
       window.location.href = res.data.url;
     }
