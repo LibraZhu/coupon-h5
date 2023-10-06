@@ -224,7 +224,7 @@ router.beforeEach((to, from, next) => {
     document.title = title as string;
   }
   if (from.query.uid) {
-    to.query.uid = from.query.uid;
+    to.query.uid = from.query.uid;  
     to.fullPath =
       to.fullPath.indexOf("?") == -1
         ? `${to.fullPath}?uid=${from.query.uid}`

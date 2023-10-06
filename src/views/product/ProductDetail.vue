@@ -36,7 +36,6 @@
         <div v-else-if="product.discount != '0'" class="product-coupon-tip">
           券后
         </div>
-        <div class="product-coupon-tip">券后</div>
         <div class="product-price">原价¥{{ product.price }}</div>
       </div>
       <span class="product-sales">
@@ -114,6 +113,7 @@ import { collectCheck, collectHandle, getLink, productDetail } from "@/api";
 import { Product, ProductDetailParam } from "@/api/model";
 import { SourceEnum } from "@/enum";
 import { useApp } from "@/hooks/useApp";
+import Clipboard from "clipboard";
 import { Base64 } from "js-base64";
 import { closeToast, showLoadingToast, showToast } from "vant";
 import { onBeforeUnmount, onMounted, ref } from "vue";
@@ -258,6 +258,9 @@ const onOrderClick = () => {
     couponUrl: product.value.couponurl,
     searchId: product.value.searchId,
   };
+  if (type == SourceEnum.DY) {
+    param.productId = product.value.goods_url;
+  }
   getLink(param).then(res => {
     closeToast();
     if (type == SourceEnum.JD) {
@@ -267,7 +270,7 @@ const onOrderClick = () => {
     } else if (type == SourceEnum.TB) {
       copy(res.data.tkl, "复制成功,打开淘宝app下单");
     } else if (type == SourceEnum.DY) {
-      copy(res.data.tkl, "复制成功,打开抖音app下单");
+      copy(res.data.dyPassword, "复制成功,打开抖音app下单");
     } else if (type == SourceEnum.WPH) {
       window.location.href = res.data.url;
     }
@@ -281,6 +284,9 @@ const onShareClick = () => {
     couponUrl: product.value.couponurl,
     searchId: product.value.searchId,
   };
+  if (type == SourceEnum.DY) {
+    param.productId = product.value.goods_url;
+  }
   getLink(param).then(res => {
     closeToast();
     let data = res.data;
@@ -288,19 +294,30 @@ const onShareClick = () => {
       data = res.data.mobileShortUrl;
     } else if (type == SourceEnum.WPH) {
       data = res.data.url;
+    } else if (type == SourceEnum.DY) {
+      data = res.data.dyPassword;
     }
     copy(data, "内容已复制");
   });
 };
 
-const copy = (data: string, message: string) => {
-  const copy = function (e: any) {
-    e.clipboardData.setData("text/plain", data);
-    e.preventDefault();
-  };
-  document.addEventListener("copy", copy, { once: true });
-  document.execCommand("copy");
-  showToast(message);
+const copy = async (data: string, message: string) => {
+  const fakeEl = document.createElement("button");
+  const clipboard = new Clipboard(fakeEl, {
+    text: () => data,
+    action: () => "copy",
+    container: document.body,
+  });
+  clipboard.on("success", e => {
+    clipboard.destroy();
+  });
+  clipboard.on("error", e => {
+    clipboard.destroy();
+  });
+  setTimeout(() => {
+    fakeEl.click();
+    showToast(message);
+  }, 200);
 };
 </script>
 <style lang="scss">
@@ -488,6 +505,9 @@ const copy = (data: string, message: string) => {
         font-size: 12px;
       }
     }
+  }
+  .van-hairline--bottom:after {
+    border-bottom-width: 0px;
   }
 }
 </style>

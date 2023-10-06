@@ -13,6 +13,7 @@
             ? 'search-tab-item search-tab-item-active'
             : 'search-tab-item'
         "
+        :style="{ padding: type == SourceEnum.DY ? '0 5px' : '0' }"
         v-for="item in tabs"
         :key="item.id"
         @click="onTabClick(item)"
@@ -129,17 +130,22 @@ if (type.value == SourceEnum.PDD) {
   tabIndex.value = "0";
 } else if (type.value == SourceEnum.DY) {
   tabs.value = [
-    { id: "1", name: "女装" },
-    { id: "2", name: "男装" },
-    { id: "8", name: "食品" },
-    { id: "9", name: "美妆" },
-    { id: "3", name: "箱包" },
-    { id: "4", name: "护肤" },
-    { id: "5", name: "家居" },
-    { id: "6", name: "数码" },
-    { id: "7", name: "户外" },
+    { id: "360", name: "食品饮料" },
+    { id: "345", name: "居家百货" },
+    { id: "353", name: "美妆个护" },
+    { id: "366", name: "服饰内衣" },
+    { id: "371", name: "鞋包配饰" },
+    { id: "380", name: "生鲜果蔬" },
+    { id: "386", name: "母婴童玩" },
+    { id: "392", name: "数码家电" },
+    { id: "399", name: "运动户外" },
+    { id: "405", name: "宠物用品" },
+    { id: "408", name: "医药保健" },
+    { id: "415", name: "汽配摩托" },
+    { id: "419", name: "图书音像" },
+    { id: "426", name: "礼品文创" },
   ];
-  tabIndex.value = "1";
+  tabIndex.value = "360";
 } else if (type.value == SourceEnum.WPH) {
   tabs.value = [
     { id: "wbjf2n26", name: "精选" },
@@ -259,10 +265,11 @@ onMounted(() => {
   align-items: center;
   height: 44px;
   position: relative;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
 }
 .search-tab::-webkit-scrollbar {
+  display: none;
   width: 0;
   height: 0;
 }
@@ -270,6 +277,7 @@ onMounted(() => {
 .search-tab-item {
   width: auto;
   min-width: 60px;
+  padding: 0 1px;
   height: 100%;
   display: flex;
   align-items: center;

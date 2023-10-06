@@ -29,7 +29,7 @@
           <span class="mine-cash-out-content">{{ money }}</span>
         </div>
         <VanButton
-          size="mini"
+          size="small"
           round
           color="linear-gradient(to right, #ef3752, #fe5f31)"
           style="padding: 0px 12px"

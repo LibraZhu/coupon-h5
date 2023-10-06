@@ -49,6 +49,7 @@ export interface Product {
   goods_name?: string;
   goods_short_name?: string;
   goods_desc?: string;
+  goods_url?: string;
   price: string;
   price_after: string;
   discount: string;

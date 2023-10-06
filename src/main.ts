@@ -6,7 +6,10 @@ import App from "./App.vue";
 import router from "./router";
 import pinia from "./store";
 import "./style.css";
-const vConsole = new VConsole();
+
+if (import.meta.env.DEV) {
+  const vConsole = new VConsole();
+}
 
 const app = createApp(App);
 app.use(Toast);
