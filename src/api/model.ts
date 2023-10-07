@@ -62,6 +62,7 @@ export interface Product {
   owner?: string;
   comments?: number;
   ispg?: string;
+  shopname?: string;
   is_tmall?: boolean;
   discountWph?: string;
   searchId?: string;

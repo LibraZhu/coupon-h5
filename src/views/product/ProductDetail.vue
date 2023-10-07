@@ -46,6 +46,10 @@
       <VanIcon v-if="type" :name="icons[type]" />
       {{ product.goods_name }}
     </div>
+    <div class="product-shop bg-white">
+      <VanIcon v-if="product.shopname" name="shop-o" />
+      {{ product.shopname }}
+    </div>
     <div class="bg-white p-10">
       <div
         v-if="product.discount != '0'"
@@ -340,6 +344,12 @@ const copy = async (data: string, message: string) => {
     font-size: 17px;
     font-weight: 500;
     padding: 0px 10px;
+  }
+  .product-shop {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 10px 0px 10px;
   }
 
   .product-discount-tip {
