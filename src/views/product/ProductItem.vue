@@ -11,7 +11,8 @@
         {{ product.goods_name }}
       </div>
       <div>
-        <div v-if="product.discountWph" style="display: inline-block">
+        <div v-if="product.is_fen"></div>
+        <div v-else-if="product.discountWph" style="display: inline-block">
           <div class="product-discount">{{ product.discountWph }}折</div>
           <div wx:if="{{product.discount!=='0'}}" class="product-coupon">
             {{ product.discount }}元券
@@ -34,7 +35,9 @@
         </span>
       </div>
       <div class="product-divider"><div></div></div>
-      <div v-if="product.source == 5" class="product-price-after-tip">
+
+      <div v-if="product.is_fen" class="product-price-after-tip">福利价</div>
+      <div v-else-if="product.source == 5" class="product-price-after-tip">
         折扣价
       </div>
       <div v-else class="product-price-after-tip">券后价</div>
@@ -70,6 +73,15 @@ const icons: Record<string, string> = {
   33: assets("tm.png"),
 };
 const onProductClick = () => {
+  if (props.product.is_fen) {
+    router.push({
+      name: "ProductFenDetail",
+      query: {
+        data: Base64.encode(JSON.stringify(props.product)),
+      },
+    });
+    return;
+  }
   if (props.from === "collect") {
     router.push({
       name: "ProductDetail",

@@ -74,10 +74,14 @@ import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
 import { closeToast, showLoadingToast } from "vant";
 import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 
 useApp();
+const route = useRoute();
 const { assets } = useImage();
-const tabIndex = ref(0);
+const tabIndex = ref(parseInt(route.query.tabIndex?.toString() ?? "0"));
+console.log(tabIndex);
+
 const navbarBackground = ref("#ec5b26");
 const miniCode = ref("");
 const banner = ref(
@@ -106,11 +110,11 @@ const getUnionLink = () => {
   if (tabIndex.value === 0 && dd.value.miniCode) {
     miniCode.value = dd.value.miniCode;
     return;
-  } else if (tabIndex.value === 1 && tt.value) {
-    miniCode.value = tt.value.miniCode.miniCode;
+  } else if (tabIndex.value === 1 && tt.value.miniCode) {
+    miniCode.value = tt.value.miniCode;
     return;
-  } else if (tabIndex.value === 2 && pig.value) {
-    miniCode.value = pig.value.miniCode.miniCode;
+  } else if (tabIndex.value === 2 && pig.value.miniCode) {
+    miniCode.value = pig.value.miniCode;
     return;
   }
   showLoadingToast({ message: "加载中", duration: 0 });
@@ -138,7 +142,7 @@ const onLinkClick = () => {
   }
 };
 onMounted(() => {
-  getUnionLink();
+  onChangeTab();
 });
 </script>
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="tabbar-container home">
+  <div class="home">
     <div class="top-bg"></div>
     <div class="navbar">
       <VanSearch
@@ -40,7 +40,7 @@
           @click="onMenuClick(menu)"
         >
           <template #icon>
-            <img style="width: 36px; height: 36px" :src="menu.image" />
+            <img style="height: 36px" :src="menu.image" />
           </template>
         </VanGridItem>
       </VanGrid>
@@ -81,7 +81,7 @@
 </template>
 <script lang="ts" setup>
 defineOptions({ name: "Home" });
-import { listProduct, unionLink } from "@/api";
+import { listProduct, phoneBill, unionLink } from "@/api";
 import { Product } from "@/api/model";
 import EventBus from "@/bus";
 import { SourceEnum } from "@/enum";
@@ -112,7 +112,18 @@ const tabs = [
 ];
 const bannerList = [{ image: assets("banner.png"), type: "search" }];
 const menuList = [
-  { image: assets("hot.png"), type: "hot", name: "今日热卖", routeName: "Hot" },
+  {
+    image: assets("one_fen.png"),
+    type: "oneFenProduct",
+    name: "一分购",
+    routeName: "ProductFenList",
+  },
+  {
+    image: assets("dy.png"),
+    type: 4,
+    name: "抖音优惠",
+    routeName: "ProductList",
+  },
   {
     image: assets("jd.png"),
     type: 2,
@@ -131,16 +142,11 @@ const menuList = [
     name: "淘宝优惠",
     routeName: "ProductList",
   },
+  { image: assets("hot.png"), type: "hot", name: "今日热卖", routeName: "Hot" },
   {
     image: assets("wph.png"),
     type: 5,
     name: "唯品会",
-    routeName: "ProductList",
-  },
-  {
-    image: assets("dy.png"),
-    type: 4,
-    name: "抖音优惠",
     routeName: "ProductList",
   },
   {
@@ -156,10 +162,15 @@ const menuList = [
     name: "滴滴打车",
     routeName: "Taxi",
   },
+  { image: assets("movie.png"), type: "movie", name: "特价电影" },
+  { image: assets("zby.png"), type: "zby", name: "吃喝玩乐" },
+  { image: assets("poi.png"), type: "poi", name: "景点门票" },
+  { image: assets("phone_bill.png"), type: "phoneBill", name: "话费快充" },
   {
-    image: assets("movie.png"),
-    type: "movie",
-    name: "特价电影",
+    image: assets("t3.png"),
+    type: "T3",
+    name: "T3打车",
+    routeName: "Taxi",
   },
 ];
 const productList = ref<Product[]>([]);
@@ -201,10 +212,45 @@ const onMenuClick = (menu: any) => {
     });
     return;
   }
+  if (menu.type === "zby") {
+    showLoadingToast({ message: "加载中", duration: 0 });
+    unionLink(4).then((res: any) => {
+      closeToast();
+      setTimeout(() => {
+        window.open(res.data.h5 ?? "");
+      }, 100);
+    });
+    return;
+  }
+  if (menu.type === "poi") {
+    showLoadingToast({ message: "加载中", duration: 0 });
+    unionLink(5).then((res: any) => {
+      closeToast();
+      setTimeout(() => {
+        window.open(res.data.h5 ?? "");
+      }, 100);
+    });
+    return;
+  }
+  if (menu.type === "phoneBill") {
+    showLoadingToast({ message: "加载中", duration: 0 });
+    phoneBill().then((res: any) => {
+      closeToast();
+      setTimeout(() => {
+        window.open(res.data.cValue ?? "");
+      }, 100);
+    });
+    return;
+  }
   if (menu.routeName === "ProductList") {
     router.push({
       name: "ProductList",
       query: { type: menu.type },
+    });
+  } else if (menu.type === "T3") {
+    router.push({
+      name: menu.routeName,
+      query: { tabIndex: 1 },
     });
   } else {
     router.push({
@@ -264,6 +310,7 @@ const onSearchClick = () => {
 </script>
 <style lang="scss">
 .home {
+  padding-bottom: var(--van-tabbar-height);
   .top-bg {
     position: absolute;
     top: 0;
@@ -305,6 +352,7 @@ const onSearchClick = () => {
     background-color: white;
     border-radius: 8px;
     margin: 16px 10px;
+    min-height: 100px;
   }
 
   .van-grid-item__content {

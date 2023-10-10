@@ -89,13 +89,23 @@
   </div>
   <van-dialog
     v-model:show="dialogInfo.visible"
-    title="微信号"
+    title="提现微信号"
     show-cancel-button
     :before-close="beforeClose"
     @open="dialogInfo.inputValue = weixin"
     @confirm="onWeixinInputConfirm"
   >
-    <VanField v-model="dialogInfo.inputValue" placeholder="请输入微信号" />
+    <div style="padding: 10px">
+      <VanField
+        v-model="dialogInfo.inputValue"
+        style="border: 1px solid #dcdcdc"
+        clearable
+        placeholder="请输入微信号"
+      />
+      <div style="font-size: 12px; color: #fe8124; margin-top: 8px">
+        提醒：<br />1.微信号只可填写一次，请谨慎填写。<br />2.如需更换，请用提现微信号和客服联系申请。
+      </div>
+    </div>
   </van-dialog>
 </template>
 <script lang="ts" setup>
@@ -157,16 +167,25 @@ walletInfo().then((res: any) => {
 const beforeClose = (action: string) => {
   if (action === "confirm" && dialogInfo.inputValue.length === 0) {
     return false;
+  } else {
+    return true;
   }
-  return true;
 };
 const onWeixinInputConfirm = () => {
+  if (dialogInfo.inputValue.length === 0) {
+    showToast("请输入微信号");
+    return;
+  }
   const param: WalletModifyParam = {
     weixin: dialogInfo.inputValue,
   };
-  walletModify(param).then(() => {
-    weixin.value = param.weixin ?? "";
-    weixinDes.value = "微信号" + param.weixin;
+  walletModify(param).then(res => {
+    if (res.data) {
+      weixin.value = param.weixin ?? "";
+      weixinDes.value = "微信号" + param.weixin;
+    } else {
+      showToast("修改失败");
+    }
   });
 };
 const onCashTabClick = () => {
@@ -179,7 +198,9 @@ const onDetailTabClick = () => {
   }
 };
 const onWeixinClick = () => {
-  dialogInfo.visible = true;
+  if (!weixin.value) {
+    dialogInfo.visible = true;
+  }
 };
 const bindMoneyInput = (e: string) => {
   let value = e;

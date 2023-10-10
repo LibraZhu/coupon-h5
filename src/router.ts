@@ -68,6 +68,25 @@ const routes = [
           noNavBar: true,
         },
       },
+      {
+        path: "oneFen",
+        name: "ProductFenList",
+        component: () => import("@/views/product/ProductFenList.vue"),
+        meta: {
+          title: "一分购",
+          noNavBar: true,
+        },
+      },
+      {
+        path: "fenDetail",
+        name: "ProductFenDetail",
+        component: () => import("@/views/product/ProductFenDetail.vue"),
+        meta: {
+          title: "商品详情",
+          noNavBar: true,
+          noCache: true,
+        },
+      },
     ],
   },
   {
@@ -224,7 +243,7 @@ router.beforeEach((to, from, next) => {
     document.title = title as string;
   }
   if (from.query.uid) {
-    to.query.uid = from.query.uid;  
+    to.query.uid = from.query.uid;
     to.fullPath =
       to.fullPath.indexOf("?") == -1
         ? `${to.fullPath}?uid=${from.query.uid}`

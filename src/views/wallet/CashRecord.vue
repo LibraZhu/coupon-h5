@@ -1,55 +1,53 @@
 <template>
-  <div class="page-container">
-    <VanPullRefresh
-      class="full-height"
-      v-model="refreshing"
-      @refresh="onRefresh"
+  <VanPullRefresh
+    class="page-container"
+    v-model="refreshing"
+    @refresh="onRefresh"
+  >
+    <VanList
+      v-model:loading="loadMore"
+      :finished="finished"
+      :finished-text="cashList.length > 0 ? '没有更多了' : ''"
+      @load="onLoad"
     >
-      <VanList
-        v-model:loading="loadMore"
-        :finished="finished"
-        :finished-text="cashList.length > 0 ? '没有更多了' : ''"
-        @load="onLoad"
+      <div
+        style="position: relative; background-color: white; margin-top: 10px"
+        v-for="item in cashList"
+        :key="item.id"
       >
-        <div
-          style="position: relative; background-color: white; margin-top: 10px"
-          v-for="item in cashList"
-          :key="item.id"
-        >
-          <div class="flex-column pb-10">
-            <div class="cash-record-name flex" style="margin: 7px">
-              <div class="flexable">{{ item.createTime }}</div>
-              <div>单号：{{ item.recordSn }}</div>
-            </div>
-            <div class="divider"></div>
-            <div class="cash-record-name">平台补贴提现</div>
-            <div class="cash-record-money">¥{{ item.money }}</div>
-            <div class="cash-record-name">
-              <text>支付账户：</text>
-              <text class="cash-record-value">微信号{{ item.payAccount }}</text>
-            </div>
-            <div
-              v-if="item.payTime"
-              class="cash-record-name"
-              style="margin-top: 0px"
-            >
-              <text>支付时间：</text>
-              <text class="cash-record-value">{{ item.payTime }}</text>
-            </div>
-            <img
-              class="cash-record-status"
-              :src="statusImages[item.payStatus ?? 0]?.toString()"
-            />
+        <div class="flex-column pb-10">
+          <div class="cash-record-name flex" style="margin: 7px">
+            <div class="flexable">{{ item.createTime }}</div>
+            <div>单号：{{ item.recordSn }}</div>
           </div>
-          <div class="divider-list"></div>
+          <div class="divider"></div>
+          <div class="cash-record-name">平台补贴提现</div>
+          <div class="cash-record-money">¥{{ item.money }}</div>
+          <div class="cash-record-name">
+            <text>支付账户：</text>
+            <text class="cash-record-value">微信号{{ item.payAccount }}</text>
+          </div>
+          <div
+            v-if="item.payTime"
+            class="cash-record-name"
+            style="margin-top: 0px"
+          >
+            <text>支付时间：</text>
+            <text class="cash-record-value">{{ item.payTime }}</text>
+          </div>
+          <img
+            class="cash-record-status"
+            :src="statusImages[item.payStatus ?? 0]?.toString()"
+          />
         </div>
-      </VanList>
-      <VanEmpty
-        v-if="!refreshing && cashList.length === 0"
-        description="还没有数据~"
-      />
-    </VanPullRefresh>
-  </div>
+        <div class="divider-list"></div>
+      </div>
+    </VanList>
+    <VanEmpty
+      v-if="!refreshing && cashList.length === 0"
+      description="还没有数据~"
+    />
+  </VanPullRefresh>
 </template>
 <script lang="ts" setup>
 import { walletCashList } from "@/api";

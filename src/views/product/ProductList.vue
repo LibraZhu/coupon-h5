@@ -38,29 +38,31 @@
     </van-tab>
   </van-tabs>
   <div class="divider"></div>
-  <div class="page-container">
-    <VanPullRefresh v-model="refreshing" @refresh="onRefresh">
-      <VanList
-        v-model:loading="loadMore"
-        :finished="finished"
-        :finished-text="list.length > 0 ? '没有更多了' : ''"
-        @load="onLoad"
+  <VanPullRefresh
+    class="page-container"
+    v-model="refreshing"
+    @refresh="onRefresh"
+  >
+    <VanList
+      v-model:loading="loadMore"
+      :finished="finished"
+      :finished-text="list.length > 0 ? '没有更多了' : ''"
+      @load="onLoad"
+    >
+      <div
+        style="position: relative; background-color: white"
+        v-for="item in list"
+        :key="item.goods_id"
       >
-        <div
-          style="position: relative; background-color: white"
-          v-for="item in list"
-          :key="item.goods_id"
-        >
-          <ProductItem from="collect" :product="item"></ProductItem>
-          <div class="divider-list"></div>
-        </div>
-      </VanList>
-      <VanEmpty
-        v-if="!refreshing && list.length === 0"
-        description="还没有数据~"
-      />
-    </VanPullRefresh>
-  </div>
+        <ProductItem from="collect" :product="item"></ProductItem>
+        <div class="divider-list"></div>
+      </div>
+    </VanList>
+    <VanEmpty
+      v-if="!refreshing && list.length === 0"
+      description="还没有数据~"
+    />
+  </VanPullRefresh>
 </template>
 <script lang="ts" setup>
 import { listProduct } from "@/api";

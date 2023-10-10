@@ -66,6 +66,7 @@ export interface Product {
   is_tmall?: boolean;
   discountWph?: string;
   searchId?: string;
+  is_fen?: boolean;
 }
 export interface Order {
   id: number;
