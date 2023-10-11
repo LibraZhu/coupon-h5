@@ -38,7 +38,7 @@
           去提现
         </VanButton>
       </div>
-      <div class="flex" style="margin-top: 20px">
+      <div class="flex" style="margin-top: 20px; align-items: start">
         <div class="flex-column flexable">
           <span class="mine-cash-out-title">待结算订单(单)</span>
           <span class="mine-cash-out-content">{{ settleOrderNum }}</span>
@@ -50,6 +50,30 @@
         <div class="flex-column flexable">
           <span class="mine-cash-out-title">累计提现(元)</span>
           <span class="mine-cash-out-content">{{ cashOutMoney }}</span>
+        </div>
+        <div
+          style="
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            display: inline-block;
+          "
+        >
+          <van-popover placement="left">
+            <span
+              style="
+                font-size: 12px;
+                padding: 5px 10px;
+                width: 150px;
+                display: inline-block;
+              "
+            >
+              平台每个月底结算上一个自然月产生的可结算订单佣金
+            </span>
+            <template #reference>
+              <van-icon size="20" color="#fff" name="question-o" />
+            </template>
+          </van-popover>
         </div>
       </div>
     </div>

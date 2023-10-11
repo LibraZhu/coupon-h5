@@ -84,7 +84,8 @@ import { ele } from "@/api";
 import { SysConfig } from "@/api/model";
 import { useApp } from "@/hooks/useApp";
 import { useImage } from "@/hooks/useImage";
-import { closeToast, showLoadingToast } from "vant";
+import Clipboard from "clipboard";
+import { closeToast, showLoadingToast, showToast } from "vant";
 import { onMounted, reactive } from "vue";
 
 useApp();
@@ -102,7 +103,8 @@ const onLinkClick = (code: string) => {
   }
   const link = linkList.find(item => item.cCode === code);
   if (link) {
-    window.open(link.cValue);
+    // window.open(link.cValue);
+    copy(link.cValue, "口令复制成功，请打开饿了么App领取");
   }
 };
 onMounted(() => {
@@ -112,6 +114,25 @@ onMounted(() => {
     linkList = res.data ?? [];
   });
 });
+
+const copy = async (data: string, message: string) => {
+  const fakeEl = document.createElement("button");
+  const clipboard = new Clipboard(fakeEl, {
+    text: () => data,
+    action: () => "copy",
+    container: document.body,
+  });
+  clipboard.on("success", e => {
+    clipboard.destroy();
+  });
+  clipboard.on("error", e => {
+    clipboard.destroy();
+  });
+  setTimeout(() => {
+    fakeEl.click();
+    showToast(message);
+  }, 200);
+};
 </script>
 <style lang="scss" scoped>
 .mt-image {
