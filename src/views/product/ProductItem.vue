@@ -7,6 +7,20 @@
     <div class="product-content">
       <div class="product-title van-multi-ellipsis--l2">
         <img v-if="product.is_tmall" style="height: 14px" :src="icons[33]" />
+        <span
+          v-else-if="product.owner === 'g'"
+          style="
+            padding: 1px 5px;
+            background-color: #e92422;
+            color: white;
+            font-size: 10px;
+            border-radius: 100px;
+            align-items: center;
+            display: inline-flex;
+          "
+        >
+          <img style="height: 14px" :src="icons[2]" />自营</span
+        >
         <img v-else style="width: 16px" :src="icons[product.source]" />
         {{ product.goods_name }}
       </div>
@@ -93,6 +107,8 @@ const onProductClick = () => {
     });
     return;
   }
+  console.log(props.product.source);
+
   if (
     props.product.source == SourceEnum.JD ||
     props.product.source == SourceEnum.TB

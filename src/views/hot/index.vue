@@ -32,7 +32,7 @@
         v-for="item in list"
         :key="item.goods_id"
       >
-        <ProductItem from="collect" :product="item"></ProductItem>
+        <ProductItem :product="item"></ProductItem>
         <div class="divider-list"></div>
       </div>
     </VanList>

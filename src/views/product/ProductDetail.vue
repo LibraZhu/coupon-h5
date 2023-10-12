@@ -43,7 +43,22 @@
       </span>
     </div>
     <div class="product-title bg-white">
-      <VanIcon v-if="type" :name="icons[type]" />
+      <img v-if="product.is_tmall" style="height: 14px" :src="icons[33]" />
+      <span
+        v-else-if="product.owner === 'g'"
+        style="
+          padding: 1px 5px;
+          background-color: #e92422;
+          color: white;
+          font-size: 10px;
+          border-radius: 100px;
+          align-items: center;
+          display: inline-flex;
+        "
+      >
+        <img style="height: 14px" :src="icons[2]" />自营</span
+      >
+      <img v-else style="width: 16px" :src="icons[product.source]" />
       {{ product.goods_name }}
     </div>
     <div class="product-shop bg-white">
@@ -117,6 +132,7 @@ import { collectCheck, collectHandle, getLink, productDetail } from "@/api";
 import { Product, ProductDetailParam } from "@/api/model";
 import { SourceEnum } from "@/enum";
 import { useApp } from "@/hooks/useApp";
+import { useImage } from "@/hooks/useImage";
 import Clipboard from "clipboard";
 import { Base64 } from "js-base64";
 import { closeToast, showLoadingToast, showToast } from "vant";
@@ -125,6 +141,7 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 useApp();
+const { assets } = useImage();
 const tabRef = ref();
 const imageWidth = ref(document.body.clientWidth);
 let scrollTop = 0;
@@ -170,11 +187,12 @@ if (id) {
 const tabIndex = ref(0);
 let lastTab = 0;
 const icons: Record<string, string> = {
-  2: new URL("@/assets/jd.png", import.meta.url).href,
-  1: new URL("@/assets/pdd.png", import.meta.url).href,
-  4: new URL("@/assets/dy.png", import.meta.url).href,
-  3: new URL("@/assets/tb.png", import.meta.url).href,
-  5: new URL("@/assets/wph.png", import.meta.url).href,
+  2: assets("jd.png"),
+  1: assets("pdd.png"),
+  4: assets("dy.png"),
+  3: assets("tb.png"),
+  5: assets("wph.png"),
+  33: assets("tm.png"),
 };
 const fav = ref(false);
 
