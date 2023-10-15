@@ -97,17 +97,29 @@ const onProductClick = () => {
     return;
   }
   if (props.from === "collect") {
-    router.push({
-      name: "ProductDetail",
-      query: {
-        id: props.product.goods_id,
-        sid: props.product.searchId,
-        type: props.product.source,
-      },
-    });
+    //如果是淘宝,传product和id，id用来获取图片集，产品信息用product。其他的传递id重新获取商品信息
+    if(props.product.source==SourceEnum.TB) {
+      router.push({
+        name: "ProductDetail",
+        query: {
+          id: props.product.goods_id,
+          data: Base64.encode(JSON.stringify(props.product)),
+          sid: props.product.searchId,
+          type: props.product.source,
+        },
+      });
+    } else {
+      router.push({
+        name: "ProductDetail",
+        query: {
+          id: props.product.goods_id,
+          sid: props.product.searchId,
+          type: props.product.source,
+        },
+      });
+    }
     return;
   }
-  console.log(props.product.source);
 
   if (
     props.product.source == SourceEnum.JD ||
