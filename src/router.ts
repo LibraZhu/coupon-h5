@@ -87,6 +87,16 @@ const routes = [
           noCache: true,
         },
       },
+      {
+        path: "tbAuth",
+        name: "TbAuth",
+        component: () => import("@/views/product/TbAuth.vue"),
+        meta: {
+          title: "授权",
+          noNavBar: true,
+          noCache: true,
+        },
+      },
     ],
   },
   {

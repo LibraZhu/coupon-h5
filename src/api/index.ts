@@ -99,3 +99,5 @@ export const phoneBill = (type?: number) =>
 //统一活动转链接口
 export const unionLink = (type?: number) =>
   api("/jtk/unionLink", { type: type }, "GET");
+//淘宝授权查询
+export const tbRelation = () => api("/user/tbRelation", {}, "POST");

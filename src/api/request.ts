@@ -42,7 +42,8 @@ service.interceptors.response.use(
       return res;
     }
 
-    if (res.code !== 200) {
+    // 502淘宝未授权
+    if (res.code !== 200 && res.code !== 502) {
       showToast(res.message || "Error");
       return Promise.reject(new Error(res.message || "Error"));
     } else {
