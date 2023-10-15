@@ -363,8 +363,10 @@ const copy = async (data: string, message: string) => {
   });
   setTimeout(() => {
     fakeEl.click();
-    showToast(data);
-  }, 100);
+    setTimeout(() => {
+      showToast(message);
+    }, 200);
+  }, 200);
 };
 </script>
 <style lang="scss">
